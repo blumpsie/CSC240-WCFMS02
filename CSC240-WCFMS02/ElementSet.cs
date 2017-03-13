@@ -138,6 +138,7 @@ namespace CSC240_WCFMS02
             }
         }
 
+        // Removes a specified object from theList
         public bool removeAnObject(Element anObject)
         {
             string paramClass = anObject.getClassName();
@@ -165,5 +166,26 @@ namespace CSC240_WCFMS02
             return false; // not found in set
         }
 
+        // replaces a specified object from theList with an user edited replacement
+        public bool editAnObject(Element editedObject)
+        {
+            string paramClass = editedObject.getClassName();
+            string currClass;
+
+            for (int i = 0; i < currentSize; i++)
+            {
+                currClass = theList[i].getClassName();
+                if (currClass.Equals(paramClass))
+                {
+                    if (theList[i].equals(editedObject))
+                    {
+                        theList[i] = editedObject.clone();
+                        return true; // success
+                    }
+                }
+            }
+
+            return false; // not found in set
+        }
     }
 }

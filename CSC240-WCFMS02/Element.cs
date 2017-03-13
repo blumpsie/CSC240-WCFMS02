@@ -9,14 +9,12 @@ namespace CSC240_WCFMS02
         public string getClassName()
         {
             string resultStr;
-            int whereAt;
+            int beginAt;
 
             resultStr = this.ToString();
-            whereAt = resultStr.IndexOf('@');
-            resultStr = resultStr.Substring(0, whereAt);
-            whereAt = resultStr.IndexOf('.');
+            beginAt = resultStr.IndexOf('.');
 
-            return resultStr.Substring(whereAt + 1);
+            return resultStr.Substring(beginAt);
         }
 
         public abstract void readIn();

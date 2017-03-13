@@ -6,53 +6,11 @@ namespace CSC240_WCFMS02
     {
         static void Main(string[] args)
         {
-            int count = 0; // to keep track of the number of movies
-
-            // Create a temporary array that has a pretty big length
-            Movie[] tempMovies = new Movie[50];
-
-            // initialize each of the objects in tempMovies
-            for(int i = 0; i < 50; i++)
-            {
-                tempMovies[i] = new Movie();
-            }
-
-            // Read in at least one Movie
-            tempMovies[count].readIn();
-            count++;
-
-            // prompt the user to see if they want to enter another Movie
-            Console.WriteLine("\nWould you like to eneter another movie (yes/no)?");
-            string anotherMovie = Console.ReadLine().ToUpper();
-
-            // check to see if the user input is valid
-            while(!anotherMovie[0].Equals('Y') && !anotherMovie[0].Equals('N'))
-            {
-                Console.WriteLine("\nInvalid Input. \nPlease try again (yes/no)?");
-                anotherMovie = Console.ReadLine().ToUpper();
-            }
-
-            // Loop through the reading of movies as long as the 
-            //user wants to keep entering them
-            while(anotherMovie[0] == 'Y')
-            {
-                tempMovies[count].readIn();
-                count++;
-
-                Console.WriteLine("\nWould you like to eneter another movie (yes/no)?");
-                anotherMovie = Console.ReadLine().ToUpper();
-            }
-
-            // Create a new array with the a set size and fill it with the movies
-            Movie[] theMovies = new Movie[count];
-            for(int i = 0; i < theMovies.Length; i++)
-            {
-                theMovies[i] = tempMovies[i];
-            }
-
-            // Sort the array of Movie objects
-            bubbleSort(theMovies);
-
+            ElementSet theList = new ElementSet();
+            /*
+            Movie movie = new Movie();
+            Console.WriteLine(movie.ToString());
+            */
             // present the menu for user to choose from
             // and process their choice
             bool terminate = false;
@@ -63,18 +21,24 @@ namespace CSC240_WCFMS02
                 do
                 {
                     Console.Write("\nWEST CHESTER FABULOUS MOVIE SOCIETY DATA MENU\n"
-                                 + "1 - Display the titles of all the movies\n"
-                                 + "2 - Display the data for a specific movie\n"
-                                 + "3 - Display the titles of all the movies released in a given year\n"
-                                 + "4 - Display the titles of all the movies with a particular star\n"
-                                 + "5 - Quit the program\n");
+                                 + "1 - Add a Movie or an Opera\n"
+                                 + "2 - Display the titles for all of the Movies\n"
+                                 + "3 - Display the titles for all of the Operas\n"
+                                 + "4 - Display the data for a particular Movie\n"
+                                 + "5 - Display the data for a particular Opera\n"
+                                 + "6 - Edit the data for a particular Movie or Opera\n"
+                                 + "7 - Remove a particular Movie or Opera\n"
+                                 + "8 - Quit the program\n");
                     userChoice = Console.ReadLine();
 
                     if (userChoice[0] != '1' ||
                         userChoice[0] != '2' ||
                         userChoice[0] != '3' ||
                         userChoice[0] != '4' ||
-                        userChoice[0] != '5')
+                        userChoice[0] != '5' ||
+                        userChoice[0] != '6' ||
+                        userChoice[0] != '7' ||
+                        userChoice[0] != '8')
                     {
                         validChoice = true;
                     }
@@ -88,24 +52,41 @@ namespace CSC240_WCFMS02
                 switch (userChoice[0])
                 {
                     case '1':
-                        displayTitles(theMovies);
+                        Console.WriteLine("\nWhich would you like to add (Movie/Opera)?");
+                        string choice = Console.ReadLine().ToUpper();
+
+                        if (choice[0] == 'M')
+                        {
+                            addMovie(theList);
+                        }
+                        else if (choice[0] == 'O')
+                        {
+                            addOpera(theList);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nNot a valid choice.");
+                        }
                         break;
                     case '2':
-                        Console.WriteLine("\nWhat movie would you like to search for?");
-                        String title = Console.ReadLine();
-                        displayMovie(theMovies, title);
+                        displayMovieTitles(theList);
                         break;
                     case '3':
-                        Console.WriteLine("\nWhat year would you like to see the movies of?");
-                        int year = Convert.ToInt32(Console.ReadLine());
-                        displayYear(theMovies, year);
+                        displayOperaTitles(theList);
                         break;
                     case '4':
-                        Console.WriteLine("What star would you like to search for?");
-                        string star = Console.ReadLine();
-                        displayStar(theMovies, star);
+                        Console.WriteLine("Not Implemented yet.");
                         break;
                     case '5':
+                        Console.WriteLine("Not Implemented yet.");
+                        break;
+                    case '6':
+                        Console.WriteLine("Not Implemented yet.");
+                        break;
+                    case '7':
+                        Console.WriteLine("Not Implemented yet.");
+                        break;
+                    case '8':
                         Console.WriteLine("\nAre you sure (Y/N)?");
                         string exitChoice = Console.ReadLine().ToUpper();
                         if (exitChoice[0] == 'Y')
@@ -118,7 +99,6 @@ namespace CSC240_WCFMS02
                         break;
                 }
             } while (!terminate);
-            
         }
 
         // Sorts an array of Movie objects using bubble sort
@@ -148,12 +128,40 @@ namespace CSC240_WCFMS02
         }
 
         // Display's the title of all the movies
-        public static void displayTitles(Movie[] movies)
+        public static void displayMovieTitles(ElementSet anElementSet)
         {
+            Element currObject;
+            Movie movie;
+
             Console.WriteLine("\n");
-            foreach (Movie movie in movies)
+            for (int i = 0; i < anElementSet.size(); i++)
             {
-                Console.WriteLine(movie.Title);
+                currObject = anElementSet.getCurrent();
+                if (currObject.getClassName().Equals("Movie"))
+                {
+                    movie = (Movie)currObject; // casts the currentObject as Movie Object
+                                               // so that the title can be accessed
+                    Console.WriteLine(movie.Title); // TODO fix the fact that it doesn't actually display
+                }
+            }
+        }
+
+        // Display's the title of all the operas
+        public static void displayOperaTitles(ElementSet anElementSet)
+        {
+            Element currObject;
+            Opera opera;
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < anElementSet.size(); i++)
+            {
+                currObject = anElementSet.getCurrent();
+                if (currObject.getClassName().Equals("Opera"))
+                {
+                    opera = (Opera)currObject; // casts the currentObject as Movie Object
+                                               // so that the title can be accessed
+                    Console.WriteLine(opera.Title); // TODO fix the fact that it doesn't actually display
+                }
             }
         }
 
@@ -228,6 +236,49 @@ namespace CSC240_WCFMS02
                 Console.WriteLine("\nThe star wasn't found in any movie.");
             }
         }
-    }
 
+        // adds a Movie to the set
+        public static void addMovie(ElementSet anElementSet)
+        {
+            Element movie = new Movie();
+            movie.readIn();
+            int result = anElementSet.add(movie);
+
+            // feedback on the result of the add
+            if (result == 0)
+            {
+                Console.WriteLine("\nThe set is full.");
+            }
+            else if (result == -1)
+            {
+                Console.WriteLine("\nThat Movie is already in the set.");
+            }
+            else
+            {
+                Console.WriteLine("\nSuccessful add.");
+            }
+        }
+
+        // adds an Opera to the set
+        public static void addOpera(ElementSet anElementSet)
+        {
+            Element opera = new Opera();
+            opera.readIn();
+            int result = anElementSet.add(opera);
+
+            // feedback on the result of the add
+            if (result == 0)
+            {
+                Console.WriteLine("\nThe set is full.");
+            }
+            else if (result == -1)
+            {
+                Console.WriteLine("\nThat Opera is already in the set.");
+            }
+            else
+            {
+                Console.WriteLine("\nSuccessful add.");
+            }
+        }
+    }
 }
