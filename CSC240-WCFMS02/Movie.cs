@@ -2,7 +2,7 @@
 
 namespace CSC240_WCFMS02
 {
-    class Movie
+    class Movie : Element
     {
         // DATA FIELDS
         private string title;
@@ -17,23 +17,32 @@ namespace CSC240_WCFMS02
             starList = "";
         }
 
-        // Returns the title of the Movie
-        public string getTitle()
+        // Sets and Gets the Movie title
+        public string Title
         {
-            return title;
+            set { title = value; }
+            get { return title; }
         }
 
-        // Returns the year the Movie was released
-        public int getYear()
+        // Sets and Gets the Movie year
+        public int Year
         {
-            return year;
+            set { year = value; }
+            get { return year; }
+        }
+
+        // Sets and Gets the Movie starList
+        public string StarList
+        {
+            set { starList = value; }
+            get { return starList; }
         }
 
         // reads in the the user data and assigns it to the fields
-        public void readIn()
+        public override void readIn()
         {
             int numOfActors;
-
+            
             Console.WriteLine("\nPlease enter the title of the movie:");
             this.title = Console.ReadLine().ToUpper();
 
@@ -62,7 +71,7 @@ namespace CSC240_WCFMS02
         }
 
         // Displays the data for the Movie
-        public void display()
+        public override void display()
         {
             string[] tokens = this.starList.Split(';');
             
@@ -89,6 +98,21 @@ namespace CSC240_WCFMS02
             }
 
             return found;
+        }
+
+        public override bool equals(Element obj)
+        {
+            return this.title.Equals(((Movie)obj).Title);
+        }
+
+        // Creates a cloned object of the Movie object
+        public override Element clone()
+        {
+            Movie theClone = new Movie();
+            theClone.Title = this.title;
+            theClone.Year = this.year;
+            theClone.StarList = this.starList;
+            return theClone;
         }
     }
 }

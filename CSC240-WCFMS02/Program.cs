@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CSC240_WCFMS02
 {
@@ -122,6 +118,7 @@ namespace CSC240_WCFMS02
                         break;
                 }
             } while (!terminate);
+            
         }
 
         // Sorts an array of Movie objects using bubble sort
@@ -138,7 +135,7 @@ namespace CSC240_WCFMS02
 
                 for (int i = 0; i < movies.Length - j; i++)
                 {
-                    if (String.Compare(movies[i].getTitle(), movies[i + 1].getTitle(), true) > 0)
+                    if (String.Compare(movies[i].Title, movies[i + 1].Title, true) > 0)
                     {
                         temp = movies[i];
                         movies[i] = movies[i + 1];
@@ -156,7 +153,7 @@ namespace CSC240_WCFMS02
             Console.WriteLine("\n");
             foreach (Movie movie in movies)
             {
-                Console.WriteLine(movie.getTitle());
+                Console.WriteLine(movie.Title);
             }
         }
 
@@ -178,15 +175,15 @@ namespace CSC240_WCFMS02
 
                 mid = min + (max - min) / 2;
 
-                if (String.Compare(movies[mid].getTitle(), title, true) < 0)
+                if (String.Compare(movies[mid].Title, title, true) < 0)
                 {
                     min = mid + 1;
                 }
-                else if (String.Compare(movies[mid].getTitle(), title, true) > 0)
+                else if (String.Compare(movies[mid].Title, title, true) > 0)
                 {
                     min = mid - 1;
                 }
-                else if (String.Compare(movies[mid].getTitle(), title, true) == 0)
+                else if (String.Compare(movies[mid].Title, title, true) == 0)
                 {
                     movies[mid].display();
                     found = true;
@@ -200,9 +197,9 @@ namespace CSC240_WCFMS02
             Console.WriteLine("\n");
             foreach (Movie movie in movies)
             {
-                if (movie.getYear() == year)
+                if (movie.Year == year)
                 {
-                    Console.WriteLine(movie.getTitle());
+                    Console.WriteLine(movie.Year);
                 }
                 else
                 {
@@ -222,7 +219,7 @@ namespace CSC240_WCFMS02
                 if (movie.hasStar(star))
                 {
                     starredInSomething = true;
-                    Console.WriteLine(movie.getTitle());
+                    Console.WriteLine(movie.Title);
                 }
             }
 
