@@ -137,6 +137,7 @@ namespace CSC240_WCFMS02
             for (int i = 0; i < anElementSet.size(); i++)
             {
                 currObject = anElementSet.getCurrent();
+                
                 if (currObject.getClassName().Equals("Movie"))
                 {
                     movie = (Movie)currObject; // casts the currentObject as Movie Object

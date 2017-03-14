@@ -14,7 +14,7 @@ namespace CSC240_WCFMS02
             resultStr = this.ToString();
             beginAt = resultStr.IndexOf('.');
 
-            return resultStr.Substring(beginAt);
+            return resultStr.Substring(beginAt + 1);
         }
 
         public abstract void readIn();
