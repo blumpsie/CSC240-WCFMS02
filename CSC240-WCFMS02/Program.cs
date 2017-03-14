@@ -49,6 +49,7 @@ namespace CSC240_WCFMS02
 
                 } while (!validChoice);
 
+                
                 switch (userChoice[0])
                 {
                     case '1':
@@ -75,10 +76,14 @@ namespace CSC240_WCFMS02
                         displayOperaTitles(theList);
                         break;
                     case '4':
-                        Console.WriteLine("Not Implemented yet.");
+                        Console.WriteLine("\nWhat Movie would you like to see information for?");
+                        string title = Console.ReadLine().ToUpper();
+                        displayMovie(theList, title);
                         break;
                     case '5':
-                        Console.WriteLine("Not Implemented yet.");
+                        Console.WriteLine("\nWhat Opera would you like to see information for?");
+                        title = Console.ReadLine().ToUpper();
+                        displayOpera(theList, title);
                         break;
                     case '6':
                         Console.WriteLine("Not Implemented yet.");
@@ -142,7 +147,7 @@ namespace CSC240_WCFMS02
                 {
                     movie = (Movie)currObject; // casts the currentObject as Movie Object
                                                // so that the title can be accessed
-                    Console.WriteLine(movie.Title); // TODO fix the fact that it doesn't actually display
+                    Console.WriteLine(movie.Title);
                 }
             }
         }
@@ -161,42 +166,66 @@ namespace CSC240_WCFMS02
                 {
                     opera = (Opera)currObject; // casts the currentObject as Movie Object
                                                // so that the title can be accessed
-                    Console.WriteLine(opera.Title); // TODO fix the fact that it doesn't actually display
+                    Console.WriteLine(opera.Title);
                 }
             }
         }
 
         // Display's the information for a specified movie
-        public static void displayMovie(Movie[] movies, string title)
+        public static void displayMovie(ElementSet anElementSet, string title)
         {
             bool found = false;
-            int min = 0;
-            int max = movies.Length - 1;
-            int mid = 0;
 
-            while (!found)
+            Element currObject;
+            Movie movie;
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < anElementSet.size(); i++)
             {
-                if (max <= min)
+                currObject = anElementSet.getCurrent();
+                if (currObject.getClassName().Equals("Movie"))
                 {
-                    Console.WriteLine("\nThat movie does not exist.");
-                    found = true;
+                    movie = (Movie)currObject;
+                    if (movie.Title.Equals(title))
+                    {
+                        movie.display();
+                        found = true;
+                    }
                 }
+            }
 
-                mid = min + (max - min) / 2;
+            if (!found)
+            {
+                Console.WriteLine("There is no Movie with that title.");
+            }
+        }
 
-                if (String.Compare(movies[mid].Title, title, true) < 0)
+        // Display's the information for a specified opera
+        public static void displayOpera(ElementSet anElementSet, string title)
+        {
+            bool found = false;
+
+            Element currObject;
+            Opera opera;
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < anElementSet.size(); i++)
+            {
+                currObject = anElementSet.getCurrent();
+                if (currObject.getClassName().Equals("Opera"))
                 {
-                    min = mid + 1;
+                    opera = (Opera)currObject;
+                    if (opera.Title.Equals(title))
+                    {
+                        opera.display();
+                        found = true;
+                    }
                 }
-                else if (String.Compare(movies[mid].Title, title, true) > 0)
-                {
-                    min = mid - 1;
-                }
-                else if (String.Compare(movies[mid].Title, title, true) == 0)
-                {
-                    movies[mid].display();
-                    found = true;
-                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("There is no Movie with that title.");
             }
         }
 
