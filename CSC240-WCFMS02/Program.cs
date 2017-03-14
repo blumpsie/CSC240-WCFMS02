@@ -119,9 +119,51 @@ namespace CSC240_WCFMS02
                                 Console.WriteLine("Successful edit.");
                             }
                         }
+                        else
+                        {
+                            Console.WriteLine("\nNot a valid option.");
+                        }
                         break;
                     case '7':
-                        Console.WriteLine("Not Implemented yet.");
+                        Console.WriteLine("\nWhich would you like to remove (Movie/Opera)?");
+                        choice = Console.ReadLine().ToUpper();
+
+                        if (choice[0] == 'M')
+                        {
+                            Movie movie = new Movie();                        // create new Movie object
+                            Console.WriteLine("\nWhat is the title of the Movie that you would like to remove?");
+                            movie.Title = Console.ReadLine().ToUpper();               // get the new information
+                            bool result = theList.removeAnObject(movie);    // the object and place store the result
+
+                            if (!result)
+                            {
+                                Console.WriteLine("\nMovie could not be removed, as that movie does not already exist.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Successful remove.");
+                            }
+                        }
+                        else if (choice[0] == 'O')
+                        {
+                            Opera opera = new Opera(); // create new Opera object
+                            Console.WriteLine("\nWhat is the title of the Opera that you would like to remove?");
+                            opera.Title = Console.ReadLine().ToUpper();               // get the new information
+                            bool result = theList.removeAnObject(opera); // the object and place store the result
+
+                            if (!result)
+                            {
+                                Console.WriteLine("\nOpera could not be removed, as that movie does not already exist.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Successful remove.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nNot a valid option.");
+                        }
                         break;
                     case '8':
                         Console.WriteLine("\nAre you sure (Y/N)?");
@@ -137,33 +179,7 @@ namespace CSC240_WCFMS02
                 }
             } while (!terminate);
         }
-
-        // Sorts an array of Movie objects using bubble sort
-        public static void bubbleSort(Movie[] movies)
-        {
-            bool swapped = true;
-            int j = 0;
-            Movie temp;
-
-            while(swapped)
-            {
-                swapped = false;
-                j++;
-
-                for (int i = 0; i < movies.Length - j; i++)
-                {
-                    if (String.Compare(movies[i].Title, movies[i + 1].Title, true) > 0)
-                    {
-                        temp = movies[i];
-                        movies[i] = movies[i + 1];
-                        movies[i + 1] = temp;
-
-                        swapped = true;
-                    }
-                }
-            }
-        }
-
+        
         // Display's the title of all the movies
         public static void displayMovieTitles(ElementSet anElementSet)
         {
@@ -258,44 +274,6 @@ namespace CSC240_WCFMS02
             if (!found)
             {
                 Console.WriteLine("There is no Movie with that title.");
-            }
-        }
-
-        // Display's the titles for all movies released in a specified year
-        public static void displayYear(Movie[] movies, int year)
-        {
-            Console.WriteLine("\n");
-            foreach (Movie movie in movies)
-            {
-                if (movie.Year == year)
-                {
-                    Console.WriteLine(movie.Year);
-                }
-                else
-                {
-                    Console.WriteLine("No movies exist for that year.");
-                }
-            }
-        }
-
-        // Display's the titles for all the movies an actor is in
-        public static void displayStar(Movie[] movies, string star)
-        {
-            bool starredInSomething = false;
-
-            Console.WriteLine("\n");
-            foreach (Movie movie in movies)
-            {
-                if (movie.hasStar(star))
-                {
-                    starredInSomething = true;
-                    Console.WriteLine(movie.Title);
-                }
-            }
-
-            if(!starredInSomething)
-            {
-                Console.WriteLine("\nThe star wasn't found in any movie.");
             }
         }
 

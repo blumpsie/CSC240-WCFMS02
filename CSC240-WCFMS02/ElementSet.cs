@@ -143,19 +143,33 @@ namespace CSC240_WCFMS02
         {
             string paramClass = anObject.getClassName();
             string currClass;
+            Element lastItem;
 
             for (int i = 0; i < currentSize; i++)
             {
                 currClass = theList[i].getClassName();
                 if (currClass.Equals(paramClass))
                 {
-                    if(theList[i].equals(anObject))
+                    if (theList[i].equals(anObject))
                     {
-                        theList[i] = null;
+                        lastItem = theList[--currentSize]; // assigns the last item in the list to variable lastItem,
+                                                           // using a prefix decrement of currentSize as the index.
+                                                           // if currentSize is used an error would occur as currentSize 
+                                                           // starts at 1 and the indexing starts at 0
 
-                        if (currentIndex == i)
+                        theList[i] = lastItem;             // assigns the lastItem to the current index of theList, 
+                                                           // writing over the object that was to be removed.
+                                                           // in essence removing the object from the list. 
+                        lastItem = null;                   // deletes the lastItem
+
+                        if (currentIndex == currentSize - 1)
                         {
-                            currentIndex--;
+                            currentIndex = 0;
+                        }
+
+                        else if (isEmpty())
+                        {
+                            currentIndex = -1;
                         }
 
                         return true; // success
