@@ -86,7 +86,39 @@ namespace CSC240_WCFMS02
                         displayOpera(theList, title);
                         break;
                     case '6':
-                        Console.WriteLine("Not Implemented yet.");
+                        Console.WriteLine("\nWhich would you like to edit (Movie/Opera)?");
+                        choice = Console.ReadLine().ToUpper();
+
+                        if (choice[0] == 'M')
+                        {
+                            Element movie = new Movie(); // create new Movie object
+                            movie.readIn();              // get the new information
+                            bool result = theList.editAnObject(movie); // the object and place store the result
+
+                            if(!result)
+                            {
+                                Console.WriteLine("\nMovie could not be edited, as that movie does not already exist.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Successful edit.");
+                            }
+                        }
+                        else if (choice[0] == 'O')
+                        {
+                            Element opera = new Opera(); // create new Opera object
+                            opera.readIn();              // get the new information
+                            bool result = theList.editAnObject(opera); // the object and place store the result
+
+                            if (!result)
+                            {
+                                Console.WriteLine("\nOpera could not be edited, as that movie does not already exist.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Successful edit.");
+                            }
+                        }
                         break;
                     case '7':
                         Console.WriteLine("Not Implemented yet.");
